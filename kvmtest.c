@@ -37,115 +37,109 @@ int main(void)
 {
     int kvm, vmfd, vcpufd, ret;
     const uint8_t code[] = {
-        0xba, 0xf8, 0x03, /* mov $0x3f8, %dx */
-        0xb0, 'T',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'E',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-
-        0xb0, 'S',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'T',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-
-        0xb0, 'E',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-
-        0xb0, 'D',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'O',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-
-
-        0xb0, 'V',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'I',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'T',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'A',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'L',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'I',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'N',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'O',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-
-        0xb0, '\n',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'C',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'O',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'D',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'I',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'G',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'O',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'E',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'X',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'E',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'C',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'U',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'T',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'A',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'D',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'O',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'D',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'E',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'N',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'T',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'R',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'O',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'D',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'E',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'V',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'M',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, ' ',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'K',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'V',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
-        0xb0, 'M',        /* mov $'\n', %al */
-        0xee,             /* out %al, (%dx) */
+        0xba, 0xf8, 0x03,
+        0xb0, 'T',
+        0xee,
+        0xb0, 'E',
+        0xee,
+        0xb0, 'S',
+        0xee,
+        0xb0, 'T',
+        0xee,
+        0xb0, 'E',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'D',
+        0xee,
+        0xb0, 'O',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'V',
+        0xee, 
+        0xb0, 'I',
+        0xee,
+        0xb0, 'T',
+        0xee,
+        0xb0, 'A',
+        0xee,
+        0xb0, 'L',
+        0xee,
+        0xb0, 'I',
+        0xee,
+        0xb0, 'N',
+        0xee,
+        0xb0, 'O',
+        0xee,
+        0xb0, '\n',
+        0xee,
+        0xb0, 'C',
+        0xee,
+        0xb0, 'O',
+        0xee,
+        0xb0, 'D',
+        0xee,
+        0xb0, 'I',
+        0xee,
+        0xb0, 'G',
+        0xee,
+        0xb0, 'O',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'E',
+        0xee,
+        0xb0, 'X',
+        0xee,
+        0xb0, 'E',
+        0xee,
+        0xb0, 'C',
+        0xee,
+        0xb0, 'U',
+        0xee,
+        0xb0, 'T',
+        0xee,
+        0xb0, 'A',
+        0xee,
+        0xb0, 'D',
+        0xee,
+        0xb0, 'O',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'D',
+        0xee,
+        0xb0, 'E',
+        0xee,
+        0xb0, 'N',
+        0xee,
+        0xb0, 'T',
+        0xee,
+        0xb0, 'R',
+        0xee,
+        0xb0, 'O',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'D',
+        0xee,
+        0xb0, 'E',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'V',
+        0xee,
+        0xb0, 'M',
+        0xee,
+        0xb0, ' ',
+        0xee,
+        0xb0, 'K',
+        0xee,
+        0xb0, 'V',
+        0xee,
+        0xb0, 'M',
+        0xee,
 
 	0xb0, '\n',       /* mov $'\n', %al */
         0xee,             /* out %al, (%dx) */
@@ -232,7 +226,7 @@ int main(void)
             err(1, "KVM_RUN");
         switch (run->exit_reason) {
         case KVM_EXIT_HLT:
-            puts("KVM_EXIT_HLT");
+            /* puts("KVM_EXIT_HLT"); */
             return 0;
         case KVM_EXIT_IO:
             if (run->io.direction == KVM_EXIT_IO_OUT && run->io.size == 1 && run->io.port == 0x3f8 && run->io.count == 1)
